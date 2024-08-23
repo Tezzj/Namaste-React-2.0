@@ -9,7 +9,7 @@ import ReactDOM from "react-dom/client";
 // while creating react element we use core React
 // but while rendering we use ReactDOM for rendering react element on Browser
 
-const heading = React.createElement("h1", { id: "heading" }, "Namaste Soham");
+const heading = React.createElement("h1", { id: "heading" }, "Namaste Soham");   // This is a react element(as it is made using react.createElement)
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(heading);
 
@@ -18,16 +18,19 @@ root.render(heading);
 
 // JSX
 // JSX - is HTML or XML like Syntax (JSX is not HTML in JS)
-const jsxHeading = (<h1 className="heading">
+
+const jsxHeading = (<h1 className="heading">  // className is similar to class attribute in html
   Namaste React from jsx
 </h1>);
 root.render(jsxHeading);
-//! JSX ==>Babel transpiles it to React.createElement ==> ReactElement(JS-Object) ==> HTMLElement(render)
+
+// JSX ==>Babel transpiles it to React.createElement ==> ReactElement(JS-Object) ==> HTMLElement(render)
 
 // JSX (transpiled before it reaches the JS Engine)
 // ReactDOM will not understand JSX Code , Hence jsx code is transpiled before (rendering) / before it reaches root.render
 // Browser can understand Core js Code or ECMASCRIPT6 (Es6) code , hence parcel is transpiling the code.
 // parcel is not doing by itself , it manages for you.
+
 // Transpiling is doing with the help of one of the Parcel Package called - [Babel]
 // Babel is js compiler (it takes jsx code & converts it to the code that js engine understands)
 // Babel is exactly Transpiling our code
@@ -38,36 +41,45 @@ root.render(jsxHeading);
 // hence jsx & React.createElement are same
 
 
-// ! React Functional Components - A js Function that returns a piece of jsx Code or (bunch of jsx code) is React Functional Components
-//  all are same
+
 
 // react Element
 const elem = <span>ReactDOM</span>
-const title = (<h1> {elem} Namaste React using JSX</h1>);
+const title = (<h1> {elem} Namaste React using JSX</h1>);   
+// If there are multiple lines of JSX code, enclose it in brackets().
 
-const HeadingComponent = () => {
+// React Functional Components - A js Function that returns a piece of jsx Code or (bunch of jsx code) is React Functional Components
+
+const HeadingComponent = () => {                      // write a react component name with a capital letter
   return <h1 className="heading">Namaste Bro</h1>;
 }
 
-const HeadingComponent1 = () => (
+const HeadingComponent1 = () => (                     // Normal functions can also be used instead of arrow functions
   <h1 className="heading">Namaste Bro 1</h1>
 );
+
+// Above two are same. 
 
 const HeadingComponent2 = () => <h1 className="heading">Namaste Bro 2</h1>
 
 let numb = 10000;
 
+// Component Composition
 const HeadingComponent3 = () => {
   return (
     <div id="container">
-      <HeadingComponent />
-      {numb}
+      <HeadingComponent />     // This is how a component can be written inside another component
+      {numb}                    // we can write js code within curly braces{}, inside JSX.
       <HeadingComponent1/>
+      // Can aslo be written as <HeadingComponent1> </HeadingComponent1>
+      // Can also be written as {Title()} // As Title is basically a function also.
       <h1 className="heading">Namaste Bro 3 + {numb} = {3 + numb}</h1>
-      {title}
+      {title}                   // way to put a react element into a component
     </div>
   )
 }
 
+// JSX also prevents cross site scripting attacks by processing the code before running it (like js is running in {} in above case).
+
 // rendering a component
-root.render(<HeadingComponent3/>)
+root.render(<HeadingComponent3/>)            
