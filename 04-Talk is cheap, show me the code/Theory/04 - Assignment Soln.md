@@ -105,6 +105,10 @@ Because Fiber is asynchronous, React can:
 
 A: A `key` is a special attribute you need to include when creating lists of elements in React. Keys are used in React to identify which items in the list are changed, updated, or deleted. In other words, we can say that keys are unique Identifier used to give an identity to the elements in the lists.
 Keys should be given to the elements within the array to give the elements a stable identity.
+This ensures efficient updates and rendering of the list, improving performance and preventing potential bugs.
+If we don't use key, and if a new item is added, react will not be able to identify that it's new and at what place to put it.
+So, it will re-render all the cards again.
+But, if key is used, every item will have a unique id, and only one item will be rendered when it is added. It is optimised solution.
 
 #### Example
 
