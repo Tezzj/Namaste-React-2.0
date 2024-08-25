@@ -1266,6 +1266,11 @@ const Body = () => {
       <div className="res-container">
         {
           reslist.map((restaurant) => ( <RestaurantCard key={restaurant.info.id} resData={restaurant} />))
+          // Giving a key to every item when using map in React is important because it helps React identify which items have changed, been added, or removed. 
+          // This ensures efficient updates and rendering of the list, improving performance and preventing potential bugs.
+          // If we don't use key, and if a new restaurantcard is added, react will not be able to identify that it's new and at what place to put it.
+          // So, it will re-render all the cards again.
+          // But, if key is used, every item will have a unique id, and only one item will be rendered when it is added. It is optimised solution.
         }
       </div>
     </div>
