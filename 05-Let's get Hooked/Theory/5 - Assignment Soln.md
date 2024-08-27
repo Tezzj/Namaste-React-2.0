@@ -127,3 +127,26 @@ const Example = (props) => {
   return <div />;
 }
 ```
+
+
+## Q: What is Reconciliation in React?
+
+A: Reconciliation in React is the process by which React updates the DOM to match the React elements you want to render. The goal of reconciliation is to update the UI efficiently by making minimal changes to the actual DOM.
+
+# How Reconciliation Works:
+Virtual DOM Comparison:
+
+React uses a lightweight copy of the actual DOM, known as the Virtual DOM. When the state or props of a component change, React updates the Virtual DOM first.
+React then compares the new Virtual DOM tree with the previous one to identify the differences. This process is called "diffing."
+
+After identifying the differences between the old and new Virtual DOM, React determines the minimal set of changes needed to update the actual DOM.
+These changes are then applied to the actual DOM in a process called "committing."
+
+# Does Reconciliation Change the Actual DOM?
+Yes, reconciliation changes the actual DOM, but only for the parts that have actually changed.
+
+React avoids unnecessary updates by only modifying the parts of the DOM that are different between the old and new Virtual DOM. This makes the update process efficient.
+
+For example, if you have a list of items and you add a new item to the list, React will only add the new item to the DOM rather than re-rendering the entire list.
+
+The efficiency of reconciliation means that React can maintain high performance even with complex UIs, as it avoids unnecessary work and minimizes direct DOM manipulations, which are typically more expensive in terms of performance.
