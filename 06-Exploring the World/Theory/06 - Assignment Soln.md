@@ -131,27 +131,27 @@ so we can extract the `JSON object` from a `fetch` response by using `await data
 `data.json()` is a method on the data object that lets you extract a `JSON object` from the data or response. The method returns a promise because we have used `await` keyword.
 so `data.json()` returns a promise resolved to a `JSON object`. 
 
-## Doubt Clarification about component re-rendering
+# Doubt Clarification about component re-rendering
 You're correct that when a state variable is updated, the entire component function re-runs, which includes re-initializing variables and running any console.log statements. However, React's rendering process is optimized to ensure that only the parts of the UI that depend on the changed state are updated in the DOM. Let's break down how this works:
 
-# Re-running the Component Function:
+## Re-running the Component Function:
 When a state variable is updated using the set function, React calls the component function again. This means that everything inside that function, including console.log statements and variable declarations, is executed again.
 
 However, this re-execution doesn't mean that the entire UI is re-rendered in the browser. Instead, React uses this re-execution to determine what has changed.
 
-# Virtual DOM Comparison (Reconciliation):
+## Virtual DOM Comparison (Reconciliation):
 React maintains a virtual DOM, a lightweight copy of the actual DOM, which it uses to track changes.
 
 After re-running the component function, React compares the new virtual DOM (produced by the updated component) with the previous virtual DOM.
 
 It identifies the specific parts of the virtual DOM that have changed as a result of the state update.
 
-# Efficient DOM Updates:
+## Efficient DOM Updates:
 Based on this comparison, React updates only the necessary parts of the actual DOM. For example, if only one element's text changes because of the updated state, only that element is updated in the real DOM.
 
 Other parts of the UI that have not changed remain the same, and React does not touch them in the actual DOM.
 
-# Why Only Part of the UI Changes:
+## Why Only Part of the UI Changes:
 UI Elements: Even though the entire component function runs again, React is smart enough to update only the parts of the UI that need to reflect the new state.
 
 Variables: Variables declared inside the component function are indeed re-initialized on every render. However, these variables do not directly cause DOM updates unless they are used in the JSX output.
