@@ -107,6 +107,9 @@ You're correct that the UI should update according to variable, but, the UI does
 
 React only tracks changes to state, so if you directly modify the variable (a regular variable in the original code), React doesn't know that it needs to re-render the component. That's why useState is required
 
+We cannot use any react hook outside a component.
+Inside a component, useState should be used in the beginning. It can't be used inside a condition.
+
 #### Syntax for useState hook
 
 ```
