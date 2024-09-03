@@ -33,3 +33,79 @@ The main difference between super() and super(props) is the this.props is undefi
 ## Q: (Research) Why can't we have the `callback function` of `useEffect async`?
 
 A: `useEffect` expects it's callback function to return nothing or return a function (cleanup function that is called when the component is unmounted). If we make the callback function as `async`, it will return a `promise` and the promise will affect the clean-up function from being called.
+
+## Q: Behind the scenes working of shallow merge, in the updation of state variables in class based components?
+A: The object you pass to `setState()` is shallowly merged into the current state. This means that only the properties you specify are updated, while the other state properties remain unchanged.
+
+Shallow merging is a process in which only the top-level properties of an object are merged, while nested objects or arrays within those properties are not deeply merged. In the context of React's setState() method, this means that when you update the state, React only merges the properties at the first level of the state object.
+
+Suppose you have a state object like this:
+```javascript
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        name: "John",
+        age: 30,
+      },
+      isLoggedIn: true,
+    };
+  }
+
+  updateState = () => {
+    this.setState({
+      user: { age: 31 },
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <p>Name: {this.state.user.name}</p>
+        <p>Age: {this.state.user.age}</p>
+      </div>
+    );
+  }
+}
+```
+
+If you call this.setState({ user: { age: 31 } }), React will perform a shallow merge of the state:
+
+Before the update:
+
+```json
+{
+  user: {
+    name: "John",
+    age: 30
+  },
+  isLoggedIn: true
+}
+After the update:
+
+json
+Copy code
+{
+  user: { 
+    age: 31 
+  },
+  isLoggedIn: true
+}
+```
+Key Points:
+
+Top-level merge only: The user object is replaced entirely, not merged with the previous user object. As a result, the name property is lost, and only age remains in the new user object.
+
+Shallow merge: Only the properties at the first level are merged. If you need to preserve nested properties, you must manually include them in the update, like this:
+
+```jsx
+this.setState({
+  user: { 
+    ...this.state.user,  // Spread operator to preserve the other properties
+    age: 31 
+  }
+});
+```
+This shallow merging behavior helps to avoid unnecessary deep merges, which could be computationally expensive, but it requires developers to be mindful of how state updates are structured.
+
