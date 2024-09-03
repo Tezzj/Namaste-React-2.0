@@ -82,10 +82,9 @@ Before the update:
   },
   isLoggedIn: true
 }
+```
 After the update:
-
-json
-Copy code
+```json
 {
   user: { 
     age: 31 
