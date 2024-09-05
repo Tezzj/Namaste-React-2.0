@@ -147,3 +147,5 @@ When the component unmounts: The cleanup function is invoked when the component 
 Before the effect re-runs: If the effect has dependencies and one of them changes, the cleanup function will run before the next effect execution.
 It's useful for preventing memory leaks or unwanted side effects.
 
+The cleanup function is automatically invoked by React, but it is up to you to specify what should be cleaned up. In the case of setInterval, clearInterval must be explicitly called to stop the interval from continuing after the component unmounts.
+
