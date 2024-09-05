@@ -9,7 +9,7 @@ A: Following is the order of lifecycle methods calls in `Class Based Components`
 1. constructor()
 2. render ()
 3. componentDidMount()
-4. componentDidUpdate()
+4. componentDidUpdate() (componentDidUpdate is called after every re-render triggered by changes in state or props.)
 5. componentWillUnmount()
 
 For more reference [React-Lifecycle-methods-Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
