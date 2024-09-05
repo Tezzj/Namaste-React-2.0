@@ -108,3 +108,42 @@ this.setState({
 ```
 This shallow merging behavior helps to avoid unnecessary deep merges, which could be computationally expensive, but it requires developers to be mindful of how state updates are structured.
 
+## Q: return function in useEffect?
+A: In useEffect, the return function is known as a cleanup function. It's used to clean up any side effects or subscriptions created by the effect, such as timers, event listeners, or API subscriptions, before the component is removed or when dependencies change.
+
+How it works:
+The cleanup function runs before the component is unmounted (like componentWillUnmount in class components).
+If the useEffect has a dependency array, the cleanup function runs before the effect re-runs due to a change in dependencies.
+
+Syntax:
+```javascript
+useEffect(() => {
+  // Effect logic (e.g., API call, subscription)
+
+  return () => {
+    // Cleanup logic (e.g., clear timer, unsubscribe)
+  };
+}, [dependencies]);
+```
+
+Example:
+```javascript
+useEffect(() => {
+  const timer = setInterval(() => {
+    console.log('Interval running');
+  }, 1000);
+
+  // Cleanup function to clear the interval
+  return () => {
+    clearInterval(timer);
+    console.log('Cleanup called');
+  };
+}, []);  // Empty array, so this runs only once and cleanup on unmount
+```
+
+When the cleanup function is called:
+When the component unmounts: The cleanup function is invoked when the component is removed from the DOM.
+
+Before the effect re-runs: If the effect has dependencies and one of them changes, the cleanup function will run before the next effect execution.
+It's useful for preventing memory leaks or unwanted side effects.
+
