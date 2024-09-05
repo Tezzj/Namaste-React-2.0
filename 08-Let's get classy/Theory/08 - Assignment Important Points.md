@@ -149,3 +149,9 @@ It's useful for preventing memory leaks or unwanted side effects.
 
 The cleanup function is automatically invoked by React, but it is up to you to specify what should be cleaned up. In the case of setInterval, clearInterval must be explicitly called to stop the interval from continuing after the component unmounts.
 
+The setInterval function will keep running even after the component unmounts because setInterval sets up a timer that runs on a separate thread managed by the browser. 
+
+Component Lifecycle: When a React component unmounts, it does not automatically stop any timers, intervals, or asynchronous operations that were set up in that component. React’s cleanup logic does not inherently know about these browser-level operations; it only provides a mechanism for you to clean them up.
+
+Automatic Unmounting: React will unmount the component and call the cleanup function, but it does not automatically manage browser-level operations like timers.
+
