@@ -12,6 +12,8 @@ A: Following is the order of lifecycle methods calls in `Class Based Components`
 4. componentDidUpdate() (componentDidUpdate is called after every re-render triggered by changes in state or props.)
 5. componentWillUnmount()
 
+ ### React's default behavior is to re-render all child components when the parent component's state changes.
+
 For more reference [React-Lifecycle-methods-Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 
 ## Q: Why do we use `componentDidMount`?
