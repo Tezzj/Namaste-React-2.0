@@ -157,3 +157,10 @@ Component Lifecycle: When a React component unmounts, it does not automatically 
 
 Automatic Unmounting: React will unmount the component and call the cleanup function, but it does not automatically manage browser-level operations like timers.
 
+## React.memo
+React.memo: By default, all RestaurantCategory components will re-render even if their props haven't changed. If this behavior becomes a performance concern, you can use React.memo to prevent unnecessary re-renders.
+
+React.memo is a higher-order component that memoizes the output of a component, preventing it from re-rendering if its props haven’t changed.
+
+
+
