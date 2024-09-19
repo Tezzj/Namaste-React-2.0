@@ -86,9 +86,13 @@ A **reducer** in Redux is a pure function that specifies how the application's s
 
 2. **State Mutation**: Reducers specify how the application's state changes over time. They take the current state and an action as arguments, and return the next state based on the action type.
 
-3. **Handling Actions**: Reducers typically use a `switch` statement to handle different action types. Each case in the switch corresponds to a specific action type that the reducer knows how to handle.
+3. **state**: Represents the current state of the items (before any modification). In Redux, state is typically an object that contains various properties (in this case, items).
 
-4. **State Shape**: Each reducer function handles a specific slice of the application's state. For complex applications, multiple reducers are combined using `combineReducers` to manage different parts of the state tree.
+4. **action**: Represents the dispatched action. Every action has a type (which indicates what kind of action is being performed) and a payload (the data passed along with the action, such as the item you want to remove).
+
+5. **Handling Actions**: Reducers typically use a `switch` statement to handle different action types. Each case in the switch corresponds to a specific action type that the reducer knows how to handle.
+
+6. **State Shape**: Each reducer function handles a specific slice of the application's state. For complex applications, multiple reducers are combined using `combineReducers` to manage different parts of the state tree.
 
 ### Anatomy of a Reducer Function:
 
@@ -376,3 +380,50 @@ store.dispatch(counterSlice.actions.incrementByAmount(5));
 - **Integration with Redux Toolkit**: `createSlice` integrates seamlessly with other Redux Toolkit features like `configureStore`, `createAsyncThunk`, and selectors, providing a cohesive development experience.
 
 - **Generated Action Creators**: It automatically generates action creators for each reducer defined in `reducers`, making it straightforward to dispatch actions from components.
+
+
+## Q: Why doesn't reducers return anything?
+A: Reducers in Redux do return something, but the way it's structured can sometimes make it seem like they don't. Here's how it works:
+
+Reducers in Redux:
+A reducer is a function that takes the current state and an action, and returns a new state. Redux relies on this return value to update the state in the store.
+
+**Why it Seems Like Reducers Don’t Return Anything**:
+In the common usage of Redux with the Redux Toolkit's createSlice or createReducer, the reducers look like they mutate the state directly (e.g., using state.items.pop()), which might seem confusing. However, under the hood, Redux Toolkit uses Immer to handle these mutations immutably, so it doesn't actually mutate the original state.
+
+When you mutate the state directly in a reducer, Immer tracks those mutations and produces a new, updated state object.
+
+Two Common Reducer Patterns:
+Mutating Style with Immer (Redux Toolkit):
+```javascript
+removeItem: (state, action) => {
+    state.items.pop();  // This seems like it's mutating the state
+}
+```
+In this example, it looks like state.items.pop() is mutating the state directly.
+
+But thanks to Immer, Redux Toolkit handles this internally by keeping track of the mutations and creating a new state without directly mutating the original one.
+
+The reducer does not need to explicitly return the new state in this style because Immer takes care of it.
+
+Traditional Redux Reducer (Immutable Style):
+```javascript
+const removeItem = (state, action) => {
+    return {
+        ...state,
+        items: state.items.filter((item, index) => index !== action.payload)
+    };
+}
+```
+In this traditional style, the reducer explicitly returns a new state.
+
+You spread the existing state into a new object and update only the part that has changed (in this case, items).
+
+This is how reducers are written in vanilla Redux (without Immer). Here, the new state is returned, and Redux replaces the old state with the new one.
+
+**Summary**:
+Redux Toolkit (with Immer) allows reducers to look like they're mutating state directly. But under the hood, it creates an immutable copy and returns that new state.
+
+Traditional Redux requires reducers to explicitly return a new state.
+
+In both cases, a reducer always returns the new state—it's just that in Redux Toolkit with Immer, you don't always see an explicit return because Immer handles it behind the scenes.
