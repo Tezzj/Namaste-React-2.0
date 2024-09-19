@@ -389,6 +389,7 @@ Reducers in Redux:
 A reducer is a function that takes the current state and an action, and returns a new state. Redux relies on this return value to update the state in the store.
 
 **Why it Seems Like Reducers Don’t Return Anything**:
+
 In the common usage of Redux with the Redux Toolkit's createSlice or createReducer, the reducers look like they mutate the state directly (e.g., using state.items.pop()), which might seem confusing. However, under the hood, Redux Toolkit uses Immer to handle these mutations immutably, so it doesn't actually mutate the original state.
 
 When you mutate the state directly in a reducer, Immer tracks those mutations and produces a new, updated state object.
@@ -422,6 +423,7 @@ You spread the existing state into a new object and update only the part that ha
 This is how reducers are written in vanilla Redux (without Immer). Here, the new state is returned, and Redux replaces the old state with the new one.
 
 **Summary**:
+
 Redux Toolkit (with Immer) allows reducers to look like they're mutating state directly. But under the hood, it creates an immutable copy and returns that new state.
 
 Traditional Redux requires reducers to explicitly return a new state.
