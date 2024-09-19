@@ -4,6 +4,82 @@
 
 ## Theory Assignment Solution:
 
+## Redux states, store and reducer working:
+In Redux, **`state`** within a reducer refers to the current state of the slice it is managing, not the entire store. Let's break this down:
+
+1. **`state.items` in Reducers**:
+   - When you see `state.items` in a reducer like `addItem`, `removeItem`, or `clearCart`, `state` refers to the portion of the state managed by that specific slice, **not the entire global Redux store**.
+   - The slice in this case is named `"cart"`, so `state` is referring to the **`cart` slice's state**, which is defined by the `initialState` in `cartSlice`.
+   - `initialState` is the starting state for this slice, which contains `items: []`. After initialization, `state` refers to the current version of this state object as it changes through dispatched actions.
+
+2. **How `state` works in Reducers**:
+   - Inside the reducer functions (`addItem`, `removeItem`, etc.), `state` refers to the current state of the slice being managed (in this case, `cart`). For example:
+     ```javascript
+     addItem: (state, action) => {
+         state.items.push(action.payload)
+     }
+     ```
+     Here, `state.items` refers to the `items` array in the `cart` slice of state, which was initialized as an empty array in the `initialState`.
+
+3. **Does `state` refer to the Slice or Store?**
+   - **In the context of a reducer function** (within `createSlice`), `state` refers to the part of the Redux store managed by that specific slice. In this case, the `cart` slice, so `state` refers to `{ items: [] }`.
+   - **At the global store level**, the state is the entire object that combines all slices. For instance, with the `appStore` configuration:
+     ```javascript
+     const appStore = configureStore({
+         reducer: {  
+             cart: cartReducer   
+         }
+     })
+     ```
+     The global state would look like this:
+     ```javascript
+     {
+         cart: {
+             items: []
+         }
+     }
+     ```
+     In this global state, `cart` is one slice, and `state.cart` refers to the entire slice managed by `cartReducer`. Inside the slice reducer, `state` refers to the cart slice's internal structure (like `state.items`).
+
+4. **`initialState` vs `state`**:
+   - **`initialState`** is simply the default state when the Redux store is first initialized. It's used to set the starting values for a slice of state. In your case:
+     ```javascript
+     initialState: {
+         items: []
+     }
+     ```
+     This means that `items` starts as an empty array.
+   
+   - **`state`** inside a reducer refers to the current state of that slice as the application is running. It can be different from `initialState` because actions like `addItem` and `removeItem` modify it over time.
+
+### Example Breakdown:
+
+- **Initial State**:
+  ```javascript
+  initialState: {
+      items: []
+  }
+  ```
+
+- **Reducer (e.g., `addItem`)**:
+  ```javascript
+  addItem: (state, action) => {
+      state.items.push(action.payload);
+  }
+  ```
+  - Here, `state` is **the current state of the cart slice**, so `state.items` refers to the `items` array in the cart slice.
+
+- **Global Store State**:
+  ```javascript
+  {
+      cart: {
+          items: []  // or items populated after dispatching addItem
+      }
+  }
+  ```
+
+Thus, `state.items` refers to the current state of the `items` array inside the `cart` slice.
+
 ## Q: Advantages of using `Redux Toolkit` over `Redux`
 `Redux Toolkit` offers several advantages over using plain `Redux`:
 
